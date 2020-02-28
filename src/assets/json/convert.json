@@ -1,0 +1,48 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "SubClasses": "AcDbEntity:AcDbLine",
+
+        "EntityHandle": "30E0",
+        "name": "黄浦区"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "center": [
+          [
+            3265390.301007707,
+            168910.726743712
+          ],
+          [
+            3262240.301537494,
+            168910.7267437083
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Layer": "t澶闃宠兘",
+        "SubClasses": "AcDbEntity:AcDbLine",
+        "EntityHandle": "1088A"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            6536203.530500006,
+            333127.1434999956
+          ],
+          [
+            6537264.190671785,
+            332066.4833282158
+          ]
+        ]
+      }
+    }
+  ]
+}
