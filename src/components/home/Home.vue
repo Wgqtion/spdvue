@@ -6,14 +6,47 @@
 <script>
   // import {getRequest} from '../utils/api'
   import appContent from './content'
+
   export default {
     name:'home',
     components: {
       appContent
     },
+    methods:{
+      add(){
+        this.loginUser.id = parseInt(localStorage.getItem('userId'));
+        this.$connect(`ws://localhost:9999/webSocketServer/`+this.loginUser.id);
+        // this.$options.sockets.onmessage = (message) => {
+        //   var jsonMsg = JSON.parse(message.data)
+        //   console.log("websocket原始数据：",message)
+        //   var data = jsonMsg.data
+        //   switch (jsonMsg.msg) {
+        //     case '1':
+        //       // this.$socket.sendObj({ msg: '110' })
+        //       break
+        //     case '2':
+        //       // this.$notify({
+        //       //   message: data,
+        //       //   duration: 3000
+        //       // })
+        //       // console.log(this.$store.state.socket)
+        //       break
+        //   }
+        // }
+      }
+    },
+    destroyed(){
+      this.$disconnect();
+    },
+    created:function () {
+      this.add();
+    },
     data () {
       return {
-
+        loginUser:{
+        name:null,
+          id:null
+      }
       }
     }
   }

@@ -22,7 +22,7 @@
             <el-menu-item index="3-4">设备型号</el-menu-item>
           </el-submenu>
           <el-submenu index="4">
-            <template slot="title">系统设置</template>
+            <template slot="title">设置</template>
             <el-menu-item index="4-1">用户管理</el-menu-item>
             <el-menu-item index="4-2">关于</el-menu-item>
           </el-submenu>

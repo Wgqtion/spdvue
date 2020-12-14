@@ -127,7 +127,7 @@ function animateLightning() {
 }
 
 export const init = (c3) =>{
-  console.log(c3)
+  // console.log(c3)
   canvas3 = c3;
   ctx3 = canvas3.getContext('2d');
   w = canvas3.width = window.innerWidth;

@@ -1,21 +1,61 @@
 <template>
   <div class="right_bottom">
+    <div class="block">
+      <el-date-picker
+        v-model="value2"
+        type="month"
+        ref="datePicker"
+        v-show="false">
+      </el-date-picker>
+    </div>
     <div ref="echartsCon" style="width: 100%; height: 100%"></div>
   </div>
 </template>
 
 <script>
   import {postJsonRequest} from '../../../utils/api'
+  // const getPanel = function(type) {
+  //   if (type === 'daterange' || type === 'datetimerange') {
+  //     return DateRangePanel;
+  //   } else if (type === 'monthrange') {
+  //     return MonthRangePanel;
+  //   }
+  //   return DatePanel;
+  // };
   export default {
+    // mixins: [Picker],
+    // props: {
+    //   type: {
+    //     type: String,
+    //     default: 'date'
+    //   },
+    //   timeArrowControl: Boolean
+    // },
+    // watch: {
+    //   type(type) {
+    //     if (this.picker) {
+    //       this.unmountPicker();
+    //       this.panel = getPanel(type);
+    //       this.mountPicker();
+    //     } else {
+    //       this.panel = getPanel(type);
+    //     }
+    //   }
+    // },
+    //
+    // created() {
+    //   this.panel = getPanel(this.type);
+    // },
+
     name: 'rightBottom',
     data () {
       return {
+        value2:null,
         monthYear:[],
         chart: null
       }
     },
     mounted() {
-
       postJsonRequest('/home/warnDateSelect',
         {thisMonth:7,thisYear:2019}
       ).then(res=>{
@@ -133,18 +173,6 @@
       this.chart.setOption({
         tooltip: {
         },
-        // visualMap:{
-        //   show: false,
-        //   min: 0,
-        //   max: 300,
-        //   calculable: true,
-        //   seriesIndex: [2],
-        //   orient: 'horizontal',
-        //   left: 'center',
-        //   bottom: 200,
-        //   borderWidth:5,
-        //   backgroundColor:"#0000ff",
-        // },
         calendar: [{
           left: 'center',
           top: 'middle',
@@ -179,6 +207,12 @@
           dimensions: [null, {type: 'ordinal'}],
           data: getVirtulData(2019)
         }]})
+      /**
+       * 点击事件，选取时间
+       */
+      this.chart.on('click', function (params) {
+        console.log(JSON.stringify(params))
+      })
     },
     components: {
 

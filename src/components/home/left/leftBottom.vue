@@ -25,15 +25,15 @@
         chart: null,
         content: null,
         online: false,
-        anim:null,
-        snapReturn:null
+        anim: null,
+        snapReturn: null
       }
     },
 // 自定义函数
     methods: {
       // 点击事件
-      getstop(){
-        this.content = false;
+      getstop () {
+        this.content = false
         this.$router.push({name: '网关信息'})
       },
       // 获取设备信息事件
@@ -41,42 +41,42 @@
         // 获取设备信息
         getNotDataRequest('/gateway/gatewayList').then(resp => {
           if (resp.status == 200) {
-            this.loading = false;
-            var s = Snap('#icon-gateway');
-            var ongateway = s.select('#icon-gateway_el_eizYCb35lD');
-            var outgateway = s.select('#icon-gateway_el_WYv_dpm7Y4');
+            this.loading = false
+            var s = Snap('#icon-gateway')
+            var ongateway = s.select('#icon-gateway_el_eizYCb35lD')
+            var outgateway = s.select('#icon-gateway_el_WYv_dpm7Y4')
 
             // 动画
             // var anim;
-            this.content = this.isOnline(resp.data);
+            this.content = this.isOnline(resp.data)
             // var snapReturn;
-            if(this.anim){
+            if (this.anim) {
 
-            }else {
+            } else {
               // 动画入口
               this.anim = () => {
                 this.snapReturn = Snap.animate(0, 100, (val) => {
-                  let m = new Snap.Matrix();
-                  m.rotate(-(val / 100) * 360, 512, 512);  // 旋转
-                  outgateway.transform(m);  // 在outgateway节点应用matrix
-                  let l = new Snap.Matrix();
-                  l.scale(((val - 50) / 50), 1, 512, 512);  // 缩放
-                  ongateway.transform(l);  // 在ongateway节点应用matrix
+                  let m = new Snap.Matrix()
+                  m.rotate(-(val / 100) * 360, 512, 512)  // 旋转
+                  outgateway.transform(m)  // 在outgateway节点应用matrix
+                  let l = new Snap.Matrix()
+                  l.scale(((val - 50) / 50), 1, 512, 512)  // 缩放
+                  ongateway.transform(l)  // 在ongateway节点应用matrix
                 }, 1500, () => {
-                  if(this.content){
+                  if (this.content) {
                     console.log(this.content)
-                    this.anim();
-                  }else{
-                    return;
+                    this.anim()
+                  } else {
+                    return
                   }
-                });
+                })
                 // console.log('xxx',this.snapReturn);
               }
             }
 
-            if(this.content){
-              this.anim();
-            }else {
+            if (this.content) {
+              this.anim()
+            } else {
               // s.stop();
               // anim();
               // console.log('qqq',this.snapReturn);
@@ -92,24 +92,39 @@
         })
       },
       isOnline (data) {
-        this.online = true;
+        this.online = true
         for (var i = 0; i < data.length; i++) {
           // console.log(data[i]);
           if (!data[i].online && data[i].eqCount > 0) {
-            this.online = false;
+            this.online = false
 
-            return false;
+            return false
           }
         }
-        return true;
+        return true
       }
     },
     beforeDestroy () {
-      this.content = false;
-      console.log('bbb',this.snapReturn);
+      this.content = false
+      // console.log('bbb',this.snapReturn);
+    },
+    computed:{
+      websocketListener(){
+        // 直接监听对象不起作用，this.$store.state.socket对象mac地址不会发生变化
+        return this.$store.state.socket.message;
+      }
+    },
+    // 监听实时信息
+    watch: {
+      websocketListener:function(newd,old){
+        console.log(this.$store.state.socket.message);
+        if(this.$store.state.socket.message.gateway){
+          this.getValue()
+        }
+      }
     },
     created () {
-      this.getValue();
+      this.getValue()
     },
     components: {
       svgIcon

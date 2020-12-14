@@ -18,15 +18,16 @@ import SvgIcon from '@/components/SvgIcon/SvgIcon'// svg component
 Vue.use(Router)
 export default new Router({
   routes: [
+    {path: '/', redirect: '/login'},
     {
       path: '/index',
       name: 'index',
       component: index,
-      children:[{
+      children: [{
         path: 'home',
         name: 'home',
         component: Home
-      },{
+      }, {
         path: 'equipment_event',
         name: '设备详情',
         component: EquipmentEvent
