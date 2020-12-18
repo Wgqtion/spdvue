@@ -240,8 +240,8 @@
       // 设备类型
       getVersion (versionId) {
         for (var i = 0; i < this.options.length; i++) {
-          if (this.options[i].value == versionId) {
-            return this.options[i].text
+          if (this.options[i].id == versionId) {
+            return this.options[i].versionNo
           }
         }
         return '未知'
@@ -413,6 +413,18 @@
 
           }
         })
+
+        // 获取设备类型信息
+        getNotDataRequest('version/versionList').then(resp => {
+          if (resp.status == 200) {
+            console.log(this.options)
+            this.options = resp.data
+          }
+          // TODO 异常处理
+          else {
+
+          }
+        })
       },
       tableRowClassName ({row, rowIndex}) {
         // console.log(row.status)
@@ -496,16 +508,7 @@
         },
         dialogVisible: false,
         versionId: null,
-        options: [{
-          value: 1,
-          text: 'IES-1/160'
-        }, {
-          value: 2,
-          text: 'IES-4/80'
-        }, {
-          value: 3,
-          text: 'IES-4/40'
-        }],
+        options: [],
         input3: '',
         select: '',
         totalElements: 0,

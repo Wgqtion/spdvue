@@ -23,9 +23,9 @@
           <el-select v-model="message.version.id" placeholder="请选择类型">
             <el-option
               v-for="item in options"
-              :key="item.versionId"
-              :label="item.label"
-              :value="item.versionId">
+              :key="item.id"
+              :label="item.versionNo"
+              :value="item.id">
             </el-option>
           </el-select>
         </el-row>
@@ -67,14 +67,9 @@ export default {
       rules: {},
       gridData: [],
       options: [{
-        versionId: 1,
-        label: '1/160'
-      }, {
-        versionId: 2,
-        label: '4/80'
-      }, {
-        versionId: 3,
-        label: '4/40'
+        id: 1,
+        versionNo: '1/160',
+        lifeThreshold:0
       }],
       selectStatus: [{
         id: 1,
@@ -121,10 +116,22 @@ export default {
       //   this.$refs['message'].resetFields();
       //   })
       // }
+      // 获取片区信息
       getNotDataRequest('area/areaList').then(resp => {
         if (resp.status == 200) {
           this.areaList = resp.data
           // console.log(JSON.stringify(resp.data))
+        }
+        // TODO 异常处理
+        else {
+
+        }
+      })
+      // 获取设备类型信息
+      getNotDataRequest('version/versionList').then(resp => {
+        if (resp.status == 200) {
+          console.log(this.options)
+          this.options = resp.data
         }
         // TODO 异常处理
         else {

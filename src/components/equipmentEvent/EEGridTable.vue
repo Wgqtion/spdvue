@@ -144,7 +144,16 @@
       // 打开详细信息弹窗层
       openBox (boxmsg) {
         this.dialogTitle = '编号:[' + boxmsg.spdNo + ']  类型:' + boxmsg.version.versionNo
-        this.dialogVisible = true
+        if(boxmsg.equipmentEvent){
+          this.dialogVisible = true
+        }else {
+          this.$message({
+            type: 'warning',
+            message: '暂无数据！'
+          })
+          return
+        }
+
         this.parentMsg = boxmsg
       },
       good_icon (equi) {
@@ -173,26 +182,30 @@
           if (resp.status == 200) {
 
             this.content = resp.data.content
-            // console.log('后端返回值1：' + JSON.stringify(this.content))
+            console.log('后端返回值1：' ,this.content)
             this.totalElements = resp.data.totalElements
             for (var i = 0; i < this.content.length; i++) {
               var tableData = [{}, {}, {}, {}]
-              tableData[0].L1 = this.content[i].equipmentEvent.silcL1
-              tableData[0].L2 = this.content[i].equipmentEvent.silcL2
-              tableData[0].L3 = this.content[i].equipmentEvent.silcL3
-              tableData[0].L4 = this.content[i].equipmentEvent.silcL4
-              tableData[1].L1 = this.content[i].equipmentEvent.lightningAmplitudeL1
-              tableData[1].L2 = this.content[i].equipmentEvent.lightningAmplitudeL2
-              tableData[1].L3 = this.content[i].equipmentEvent.lightningAmplitudeL3
-              tableData[1].L4 = this.content[i].equipmentEvent.lightningAmplitudeL4
-              tableData[2].L1 = this.content[i].equipmentEvent.lightningCountL1
-              tableData[2].L2 = this.content[i].equipmentEvent.lightningCountL2
-              tableData[2].L3 = this.content[i].equipmentEvent.lightningCountL3
-              tableData[2].L4 = this.content[i].equipmentEvent.lightningCountL4
-              tableData[3].L1 = this.content[i].equipmentEvent.lifeTermL1
-              tableData[3].L2 = this.content[i].equipmentEvent.lifeTermL2
-              tableData[3].L3 = this.content[i].equipmentEvent.lifeTermL3
-              tableData[3].L4 = this.content[i].equipmentEvent.lifeTermL4
+              if(this.content[i].equipmentEvent){
+                tableData[0].L1 = this.content[i].equipmentEvent.silcL1
+                tableData[0].L2 = this.content[i].equipmentEvent.silcL2
+                tableData[0].L3 = this.content[i].equipmentEvent.silcL3
+                tableData[0].L4 = this.content[i].equipmentEvent.silcL4
+                tableData[1].L1 = this.content[i].equipmentEvent.lightningAmplitudeL1
+                tableData[1].L2 = this.content[i].equipmentEvent.lightningAmplitudeL2
+                tableData[1].L3 = this.content[i].equipmentEvent.lightningAmplitudeL3
+                tableData[1].L4 = this.content[i].equipmentEvent.lightningAmplitudeL4
+                tableData[2].L1 = this.content[i].equipmentEvent.lightningCountL1
+                tableData[2].L2 = this.content[i].equipmentEvent.lightningCountL2
+                tableData[2].L3 = this.content[i].equipmentEvent.lightningCountL3
+                tableData[2].L4 = this.content[i].equipmentEvent.lightningCountL4
+                tableData[3].L1 = this.content[i].equipmentEvent.lifeTermL1
+                tableData[3].L2 = this.content[i].equipmentEvent.lifeTermL2
+                tableData[3].L3 = this.content[i].equipmentEvent.lifeTermL3
+                tableData[3].L4 = this.content[i].equipmentEvent.lifeTermL4
+              }else {
+                tableData = null
+              }
               // console.log('后端返回值3：' + JSON.stringify(tableData))
               this.content[i].tableData = tableData
             }

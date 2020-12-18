@@ -10,9 +10,9 @@
       <el-select v-model="versionId" clearable placeholder="请选择">
         <el-option
           v-for="item in options"
-          :key="item.versionId"
-          :label="item.label"
-          :value="item.versionId">
+          :key="item.id"
+          :label="item.versionNo"
+          :value="item.id">
         </el-option>
       </el-select>
     </el-form-item>
@@ -99,6 +99,18 @@
 
           }
         })
+
+        // 获取设备类型信息
+        getNotDataRequest('version/versionList').then(resp => {
+          if (resp.status == 200) {
+            console.log(this.options)
+            this.options = resp.data
+          }
+          // TODO 异常处理
+          else {
+
+          }
+        })
       }
     },
     mounted: function () {
@@ -114,16 +126,7 @@
         // 检索参数设备类型
         versionId: null,
         // 设备类型列表
-        options: [{
-          versionId: 1,
-          label: 'IES-1/160'
-        }, {
-          versionId: 2,
-          label: 'IES-4/80'
-        }, {
-          versionId: 3,
-          label: 'IES-4/40'
-        }],
+        options: [],
         // 检索参数设备状态
         elestatus: [],
         // 片区列表

@@ -130,39 +130,24 @@
             type: 'warning',
             message: '数据不能为空！'
           })
-        } else if (!this.scopeRow.name || this.scopeRow.name == '') {
+        } else if (!this.scopeRow.versionNo || this.scopeRow.versionNo == '') {
           this.$message({
             type: 'warning',
-            message: '名称不能为空！'
+            message: '设备编号不能为空！'
           })
-        } else if (!this.scopeRow.longitude || this.scopeRow.longitude == '') {
+        } else if (!this.scopeRow.lifeThreshold || this.scopeRow.lifeThreshold == '') {
           this.$message({
             type: 'warning',
-            message: '经度不能为空！'
-          })
-        } else if (!this.scopeRow.latitude || this.scopeRow.latitude == '') {
-          this.$message({
-            type: 'warning',
-            message: '纬度不能为空！'
+            message: '请填写剩余寿命！'
           })
         } else {
           thispram = {
-            name: this.scopeRow.name,
-            longitude: this.scopeRow.longitude,
-            latitude: this.scopeRow.latitude,
+            versionNo: this.scopeRow.versionNo,
+            lifeThreshold: this.scopeRow.lifeThreshold,
+            description: this.scopeRow.description,
           }
-          if (this.scopeRow.parentCode && this.scopeRow.parentCode != null && this.scopeRow.parentCode != '') {
-            thispram.parentCode = this.scopeRow.parentCode[this.scopeRow.parentCode.length-1]
-          }
-          // 新建片区
-          if (this.buttonValue == 1) {
-            messagerow = '添加成功！'
-          }
-          // 修改数据
-          else {
-            messagerow = '修改成功！'
-            thispram.id = this.scopeRow.id
-          }
+          // 新建设备型号
+          messagerow = '添加成功！'
           console.log(thispram)
           postJsonRequest('/version/save', thispram).then(resp => {
             if (resp.status == 200) {
@@ -187,7 +172,7 @@
           type: 'error'
         }).then(() => {
           console.log(data.id)
-          postJsonRequest('/area/deleteArea', {code: data.code}).then(resp => {
+          postJsonRequest('/version/deleteVersion', data).then(resp => {
             if (resp.status == 200) {
               this.dialogVisible = false
               console.log(resp)

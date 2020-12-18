@@ -52,11 +52,19 @@
               align="center"
               prop="updateTime"
               label="更新时间"
-              sortable
-            >
+              sortable>
               <template slot-scope="scope">
                 <i class="el-icon-time"></i>
                 <span style="margin-left: 10px">{{ scope.row.updateTime }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column
+              align="center"
+              prop="updateTime"
+              label="操作"
+              sortable>
+              <template slot-scope="scope">
+                <el-button type="danger" @click="handleDelete(scope.row)">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -104,6 +112,28 @@
       refresh () {
         this.loading = true
         this.getValue()
+      },
+      // 删除网关信息
+      handleDelete(item){
+        this.$confirm('确认删除该设备记录?', '警告', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'error'
+        }).then(() => {
+          console.log(item)
+          postJsonRequest('/gateway/deleteGateway', item).then(resp => {
+            if (resp.status == 200) {
+              this.dialogVisible = false
+              // console.log(resp)
+              this.$message({
+                type: 'success',
+                message: '删除成功！'
+              })
+              this.getValue()
+            }
+          })
+        }).catch(() => {
+        })
       }
     },
     mounted: function () {
