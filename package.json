@@ -19,7 +19,7 @@
     "less-loader": "^4.1.0",
     "mavon-editor": "^2.4.13",
     "node-sass": "^4.14.1",
-    "qs": "^6.5.2",
+    "qs": "^6.7.3",
     "snapsvg": "^0.5.1",
     "vue": "^2.5.2",
     "vue-devtools": "5.1.0",
